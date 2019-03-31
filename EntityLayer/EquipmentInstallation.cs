@@ -25,6 +25,7 @@ namespace EntityLayer
             return this.EquipmentItemSerialNumber.CompareTo(other.EquipmentItemSerialNumber);
         }
 
+        public InstallationLocation InstallationLocation { get; set; }
 
        
     }

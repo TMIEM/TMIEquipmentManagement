@@ -12,7 +12,6 @@ namespace DataAccessLayer
 {
     public class DatabaseConnection
     {
-        //test
         private static DatabaseConnection _singleInstance = new DatabaseConnection();
 
         public static DatabaseConnection getInstance()
@@ -53,8 +52,8 @@ namespace DataAccessLayer
 
         public string ConnectionString
         {
-            get => Obj_sqlcon.ConnectionString;
-            set => ConnectionString = value;
+            get { return Obj_sqlcon.ConnectionString; }
+            set { ConnectionString = value; }
         }
 
         public SqlConnection GetSqlConnection()

@@ -51,6 +51,7 @@
     <Compile Include="EquipmentItem.cs" />
     <Compile Include="EquipmentItemHealth.cs" />
     <Compile Include="GeoLocation.cs" />
+    <Compile Include="InstallationLocation.cs" />
     <Compile Include="ItemType.cs" />
     <Compile Include="ServiceItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

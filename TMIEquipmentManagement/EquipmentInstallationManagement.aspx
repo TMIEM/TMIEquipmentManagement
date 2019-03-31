@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="./dist/css/base/jquery-ui-1.9.2.custom.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContentPlaceHolder" runat="server">
     <section class="content-header">
@@ -136,6 +137,67 @@
                             </asp:RequiredFieldValidator>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Department</label>
+                            <asp:TextBox runat="server" CssClass="form-control"
+                                         ID="txtDepartment"
+                                         placeholder="Enter department">
+                            </asp:TextBox>
+                            <asp:RequiredFieldValidator CssClass="text-danger" Display="Dynamic" runat="server"
+                                                        ID="RequiredFieldValidator1"
+                                                        ControlToValidate="txtDepartment"
+                                                        ErrorMessage="EquipmentInstallation Department is required">
+                            </asp:RequiredFieldValidator>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Ward</label>
+                            <asp:TextBox runat="server" CssClass="form-control"
+                                         ID="txtWard"
+                                         placeholder="Enter ward">
+                            </asp:TextBox>
+                            <asp:RequiredFieldValidator CssClass="text-danger" Display="Dynamic" runat="server"
+                                                        ID="RequiredFieldValidator2"
+                                                        ControlToValidate="txtWard"
+                                                        ErrorMessage="EquipmentInstallation Ward is required">
+                            </asp:RequiredFieldValidator>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Contact Person</label>
+                            <asp:TextBox runat="server" CssClass="form-control"
+                                         ID="txtContactPerson"
+                                         placeholder="Enter Contact Person">
+                            </asp:TextBox>
+                            <asp:RequiredFieldValidator CssClass="text-danger" Display="Dynamic" runat="server"
+                                                        ID="RequiredFieldValidator3"
+                                                        ControlToValidate="txtContactPerson"
+                                                        ErrorMessage=" Contact Person is required">
+                            </asp:RequiredFieldValidator>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Contact Person Contact Number (+XX XX XXX XXXX)</label>
+                            <asp:TextBox runat="server" CssClass="form-control"
+                                         ID="txtContactPersonContact"
+                                         MaxLength="29"
+                                         TextMode="Phone"
+                                         placeholder="Enter Customer Telephone Number">
+                            </asp:TextBox>
+                            <asp:RequiredFieldValidator CssClass="text-danger" Display="Dynamic" runat="server"
+                                                        ID="rfvCustomerTelephone"
+                                                        ControlToValidate="txtContactPersonContact"
+                                                        ErrorMessage="Contact person contact number is required">
+                            </asp:RequiredFieldValidator>
+                        </div>
+
+                    </div>
+
                 </div>
                 <!-- /.left side input fields-->
                 <!-- right side input fields-->
@@ -340,12 +402,14 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsContentPlaceHolder" runat="server">
     <script src="http://digitalbush.com/wp-content/uploads/2013/01/jquery.maskedinput-1.3.1.min_.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <%-- <script src="http://code.jquery.com/jquery-1.10.2.js"></script> --%>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <!-- DataTables -->
     <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  
     <script>
+
         var t = $('#EquipmentInstallationsTable').DataTable({
             "scrollX": true,
             "scrollCollapse": true,
@@ -379,6 +443,14 @@
                 changeYear: true
             });
         });
+    </script>
+    
+    <script>
+        jQuery(function($) {
+            $.mask.definitions['~'] = '[+]';
+            $("#MainContentPlaceHolder_txtContactPersonContact").mask("~99 99 999 9999");
+        });
+
     </script>
 
 </asp:Content>

@@ -60,6 +60,11 @@ namespace TMIEquipmentManagement
                 _editingEquipmentInstallation.ServiceAgreementPeriodMonths = Convert.ToInt32(txtEquipmentInstallationSAPeriod.Text);
                 _editingEquipmentInstallation.InvoiceId = txtEquipmentInstallationInvoiceId.Text;
                 _editingEquipmentInstallation.CustomerId = Convert.ToInt32(txtEquipmentInstallationCustomerId.Text);
+                _editingEquipmentInstallation.InstallationLocation.Department = txtDepartment.Text;
+                _editingEquipmentInstallation.InstallationLocation.Ward = txtWard.Text;
+                _editingEquipmentInstallation.InstallationLocation.ContactPerson = txtContactPerson.Text;
+                _editingEquipmentInstallation.InstallationLocation.ContactPersonContact = txtContactPersonContact.Text;
+
                 EquipmentInstallationOpsBL.UpdateEquipmentInstallation(_editingEquipmentInstallation);
                 Response.Redirect("EquipmentInstallationManagement.aspx");
             }
@@ -88,6 +93,17 @@ namespace TMIEquipmentManagement
                         InvoiceId = txtEquipmentInstallationInvoiceId.Text,
                         CustomerId = Convert.ToInt32(txtEquipmentInstallationCustomerId.Text)
                     };
+
+                    var installationLocation = new InstallationLocation()
+                    {
+                        Department = txtDepartment.Text,
+                        Ward = txtWard.Text,
+                        ContactPerson = txtContactPerson.Text,
+                        ContactPersonContact = txtContactPersonContact.Text
+                    };
+
+                    equipmentInstallation.InstallationLocation = installationLocation;
+
                     EquipmentInstallationOpsBL.AddNewEquipmentInstallation(equipmentInstallation);
                     Response.Redirect("EquipmentInstallationManagement.aspx");
                 }
@@ -135,6 +151,11 @@ namespace TMIEquipmentManagement
             txtEquipmentInstallationSAPeriod.Text = _editingEquipmentInstallation.ServiceAgreementPeriodMonths.ToString();
             txtEquipmentInstallationInvoiceId.Text = _editingEquipmentInstallation.InvoiceId;
             txtEquipmentInstallationCustomerId.Text = _editingEquipmentInstallation.CustomerId.ToString();
+            //installation location
+            txtDepartment.Text = _editingEquipmentInstallation.InstallationLocation.Department;
+            txtWard.Text = _editingEquipmentInstallation.InstallationLocation.Ward;
+            txtContactPerson.Text = _editingEquipmentInstallation.InstallationLocation.ContactPerson;
+            txtContactPersonContact.Text = _editingEquipmentInstallation.InstallationLocation.ContactPersonContact;
         }
 
         protected void btnCancelUpdate_OnClick(object sender, EventArgs e)
