@@ -12,6 +12,7 @@ namespace DataAccessLayer
 {
     public class DatabaseConnection
     {
+        //test
         private static DatabaseConnection _singleInstance = new DatabaseConnection();
 
         public static DatabaseConnection getInstance()
