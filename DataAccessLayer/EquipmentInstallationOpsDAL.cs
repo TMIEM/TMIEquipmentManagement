@@ -24,7 +24,8 @@ namespace DataAccessLayer
             sqlDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
             sqlDataAdapter.SelectCommand.Parameters.AddWithValue("@department",
                 equipmentInstallation.InstallationLocation.Department);
-            sqlDataAdapter.SelectCommand.Parameters.AddWithValue("@ward", equipmentInstallation.InstallationLocation.Ward);
+            sqlDataAdapter.SelectCommand.Parameters.AddWithValue("@ward",
+                equipmentInstallation.InstallationLocation.Ward);
             sqlDataAdapter.SelectCommand.Parameters.AddWithValue("@contact_person",
                 equipmentInstallation.InstallationLocation.ContactPerson);
             sqlDataAdapter.SelectCommand.Parameters.AddWithValue("@contact_person_contact",
@@ -49,7 +50,6 @@ namespace DataAccessLayer
             sqlCommand.Parameters.AddWithValue("@installation_locationid", installationLocationId);
             sqlCommand.ExecuteNonQuery();
 
-           
 
             //close connection
             connection.CloseSqlConnection(sqlConnection);
@@ -75,7 +75,6 @@ namespace DataAccessLayer
             //populating place list by reading sp result
             foreach (DataRow dataRow in dataTable.Rows)
             {
-
                 var equipmentInstallation = new EquipmentInstallation()
                 {
                     EquipmentItemSerialNumber = dataRow["equipment_itemserial_number"].ToString(),
@@ -86,6 +85,10 @@ namespace DataAccessLayer
                     InvoiceId = dataRow["invoice_id"].ToString(),
                     CustomerId = Convert.ToInt32(dataRow["customerid"].ToString())
                 };
+
+                if (!DBNull.Value.Equals(dataRow["commissioning_date"]))
+                    equipmentInstallation.CommissioningDate
+                        = Convert.ToDateTime(dataRow["commissioning_date"]);
 
                 var installationLocationId = Convert.ToInt32(dataRow["installation_locationid"].ToString());
                 var location = GetInstallationLocation(installationLocationId);
@@ -129,8 +132,8 @@ namespace DataAccessLayer
                 ContactPerson = dataTable.Rows[0]["contact_person"].ToString(),
                 ContactPersonContact = dataTable.Rows[0]["contact_person_contact"].ToString()
             };
-            
-              
+
+
             return installationLocation;
         }
 
@@ -163,6 +166,7 @@ namespace DataAccessLayer
             {
                 EquipmentItemSerialNumber = dataTable.Rows[0]["equipment_itemserial_number"].ToString(),
                 InstallationDate = Convert.ToDateTime(dataTable.Rows[0]["installation_date"].ToString()),
+
                 WarrantyPeriodMonths = Convert.ToInt32(dataTable.Rows[0]["warranty_period_months"].ToString()),
                 ServiceAgreementPeriodMonths =
                     Convert.ToInt32(dataTable.Rows[0]["service_agreement_period_months"].ToString()),
@@ -170,6 +174,9 @@ namespace DataAccessLayer
                 CustomerId = Convert.ToInt32(dataTable.Rows[0]["customerid"].ToString())
             };
 
+            if (!DBNull.Value.Equals(dataTable.Rows[0]["commissioning_date"]))
+                equipmentInstallation.CommissioningDate
+                    = Convert.ToDateTime(dataTable.Rows[0]["commissioning_date"]);
 
             var installationLocationId = Convert.ToInt32(dataTable.Rows[0]["installation_locationid"].ToString());
             var location = GetInstallationLocation(installationLocationId);
@@ -197,7 +204,8 @@ namespace DataAccessLayer
                 equipmentInstallation.ServiceAgreementPeriodMonths);
             sqlCommand.Parameters.AddWithValue("@invoice_id", equipmentInstallation.InvoiceId);
             sqlCommand.Parameters.AddWithValue("@customerid", equipmentInstallation.CustomerId);
-            sqlCommand.Parameters.AddWithValue("@installation_locationid", equipmentInstallation.InstallationLocation.Id);
+            sqlCommand.Parameters.AddWithValue("@installation_locationid",
+                equipmentInstallation.InstallationLocation.Id);
 
             sqlCommand.ExecuteNonQuery();
 
@@ -208,13 +216,36 @@ namespace DataAccessLayer
             //call sp
             locationCommand.Parameters.AddWithValue("@id",
                 equipmentInstallation.InstallationLocation.Id);
-            locationCommand.Parameters.AddWithValue("@department", equipmentInstallation.InstallationLocation.Department);
+            locationCommand.Parameters.AddWithValue("@department",
+                equipmentInstallation.InstallationLocation.Department);
             locationCommand.Parameters.AddWithValue("@ward", equipmentInstallation.InstallationLocation.Ward);
-            locationCommand.Parameters.AddWithValue("@contact_person", equipmentInstallation.InstallationLocation.ContactPerson);
-            locationCommand.Parameters.AddWithValue("@contact_person_contact", equipmentInstallation.InstallationLocation.ContactPersonContact);
+            locationCommand.Parameters.AddWithValue("@contact_person",
+                equipmentInstallation.InstallationLocation.ContactPerson);
+            locationCommand.Parameters.AddWithValue("@contact_person_contact",
+                equipmentInstallation.InstallationLocation.ContactPersonContact);
 
             locationCommand.ExecuteNonQuery();
 
+
+            //close connection
+            connection.CloseSqlConnection(sqlConnection);
+        }
+
+        public static void UpdateEquipmentCommissioningDate(EquipmentInstallation equipmentInstallation)
+        {
+            //make connection
+            DatabaseConnection connection = DatabaseConnection.getInstance();
+            SqlConnection sqlConnection = connection.GetSqlConnection();
+            connection.OpenSqlConnection(sqlConnection);
+            SqlCommand sqlCommand = new SqlCommand("usp_equipment_updateCommissioningDate", sqlConnection);
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+
+            //call sp
+            sqlCommand.Parameters.AddWithValue("@equipment_itemserial_number",
+                equipmentInstallation.EquipmentItemSerialNumber);
+            sqlCommand.Parameters.AddWithValue("@commissioning_date", equipmentInstallation.CommissioningDate);
+
+            sqlCommand.ExecuteNonQuery();
 
             //close connection
             connection.CloseSqlConnection(sqlConnection);
@@ -277,6 +308,10 @@ namespace DataAccessLayer
                     InvoiceId = dataRow["invoice_id"].ToString(),
                     CustomerId = Convert.ToInt32(dataRow["customerid"].ToString())
                 };
+
+                if (!DBNull.Value.Equals(dataTable.Rows[0]["commissioning_date"]))
+                    equipmentInstallation.CommissioningDate
+                        = Convert.ToDateTime(dataTable.Rows[0]["commissioning_date"]);
 
                 var installationLocationId = Convert.ToInt32(dataRow["installation_locationid"].ToString());
                 var location = GetInstallationLocation(installationLocationId);

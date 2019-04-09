@@ -15,6 +15,8 @@ namespace TMIEquipmentManagement
 {
     public partial class EquipmentItemProfile : System.Web.UI.Page
     {
+        private EquipmentInstallation _equipmentInstallation;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             var serialNumber = Request.QueryString["serialnumber"];
@@ -79,6 +81,8 @@ namespace TMIEquipmentManagement
             {
                 var equipmentInstallation = EquipmentInstallationOpsBL
                     .GetEquipmentInstallationBySerial(equipmentItem.SerialNumber);
+
+                _equipmentInstallation = equipmentInstallation;
                 DisplayEquipmentInstallationDetails(equipmentInstallation);
                 lblInstalled.Text = "Yes";
             }
@@ -111,7 +115,20 @@ namespace TMIEquipmentManagement
             var customer = CustomerOpsBL.GetCustomerById(equipmentInstallation.CustomerId);
             hlCustomer.NavigateUrl = "CustomerProfile.aspx?id=" + customer.Id;
             lblCustomerName.Text = customer.Name;
+            var isCommissioned = equipmentInstallation.CommissioningDate != DateTime.MinValue;
 
+            if (isCommissioned)
+            {
+                lblCommissioningDate.Text = equipmentInstallation.CommissioningDate.ToLongDateString();
+                btnCommissionEquipment.Text = "Update Commissioning Date";
+            }
+            else
+            {
+                lblCommissioningDate.Text = "Not Commissioned";
+                btnCommissionEquipment.Text = "Commission Equipment";
+            }
+
+            
             LoadHealthInfo(equipmentInstallation);
 
         }
@@ -226,6 +243,15 @@ namespace TMIEquipmentManagement
             lvConsumableBatchUsages.DataSource =
                 ConsumableBatchServiceUsageOpsBL.GetConsumableServiceUsagesByEquipment(equipmentSerial);
             lvConsumableBatchUsages.DataBind();
+        }
+
+        protected void btnCommissionEquipment_OnClick(object sender, EventArgs e)
+        {
+            var commissioningDate = Convert.ToDateTime(txtCommissioningDate.Text.ToString());
+            _equipmentInstallation.CommissioningDate = commissioningDate;
+            EquipmentInstallationOpsBL.UpdateEquipmentCommissioningDate(_equipmentInstallation);
+            LoadInstallationDetails(_equipmentInstallation.EquipmentItem);
+
         }
     }
 }

@@ -53,5 +53,9 @@ namespace BusinessLayer
             return EquipmentInstallationOpsDAL.GetAllEquipmentInstallationsForCustomer(customerId);
         }
 
+        public static void UpdateEquipmentCommissioningDate(EquipmentInstallation equipmentInstallation)
+        {
+            EquipmentInstallationOpsDAL.UpdateEquipmentCommissioningDate(equipmentInstallation);
+        }
     }
 }

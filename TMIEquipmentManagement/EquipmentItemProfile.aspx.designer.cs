@@ -121,6 +121,42 @@ namespace TMIEquipmentManagement {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divInstallationdetails;
         
         /// <summary>
+        /// txtCommissioningDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCommissioningDate;
+        
+        /// <summary>
+        /// rfvCommissioningDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCommissioningDate;
+        
+        /// <summary>
+        /// cvEquipmentInstallationDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator cvEquipmentInstallationDate;
+        
+        /// <summary>
+        /// btnCommissionEquipment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCommissionEquipment;
+        
+        /// <summary>
         /// hlCustomer control.
         /// </summary>
         /// <remarks>
@@ -146,6 +182,15 @@ namespace TMIEquipmentManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblInstallationDate;
+        
+        /// <summary>
+        /// lblCommissioningDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCommissioningDate;
         
         /// <summary>
         /// lblWarranty control.

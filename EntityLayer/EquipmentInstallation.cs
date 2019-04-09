@@ -11,6 +11,7 @@ namespace EntityLayer
     {
         public string EquipmentItemSerialNumber { get; set; }
         public DateTime InstallationDate { get; set; }
+        public DateTime CommissioningDate { get; set; }
         public int WarrantyPeriodMonths { get; set; }
         public int ServiceAgreementPeriodMonths { get; set; }
         public string InvoiceId { get; set; }
