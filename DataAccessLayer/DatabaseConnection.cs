@@ -36,6 +36,12 @@ namespace DataAccessLayer
             Obj_sqnbuild.Add("Min pool size", 20);
             Obj_sqnbuild.Add("Pooling", true);
             Obj_sqlcon.ConnectionString = Obj_sqnbuild.ConnectionString;
+
+            var connectionStringSettings = ConfigurationManager.ConnectionStrings["tmidbConnectionString"];
+            if (connectionStringSettings.ConnectionString != "")
+            {
+                Obj_sqlcon.ConnectionString = connectionStringSettings.ConnectionString;
+            }
         }
 
         public void OpenSqlConnection(SqlConnection connection)
